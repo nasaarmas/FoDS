@@ -28,7 +28,6 @@ INIT_TABLES = [
 ]
 
 DUMMY_DATA = '''
--- Dodajemy 10 studentów
 WITH inserted_students AS (
     INSERT INTO Uzytkownik (login, imie, nazwisko, haslo, czyAdmin) VALUES 
     ('jankowalski', 'Jan', 'Kowalski', 'haslo123', FALSE),
@@ -46,7 +45,6 @@ WITH inserted_students AS (
 INSERT INTO Student (idUzytkownik) 
 SELECT id FROM inserted_students;
 
--- Dodajemy 5 nauczycieli
 WITH inserted_teachers AS (
     INSERT INTO Uzytkownik (login, imie, nazwisko, haslo, czyAdmin) VALUES 
     ('robertlewandowski', 'Robert', 'Lewandowski', 'haslo321', TRUE),
@@ -59,16 +57,12 @@ WITH inserted_teachers AS (
 INSERT INTO Nauczyciel (idUzytkownik) 
 SELECT id FROM inserted_teachers;
 
---- Dodajemy 5 kursów
-
 INSERT INTO Kurs (Nazwa) VALUES 
 ('Kurs programowania w Pythonie'),
 ('Kurs lutowania'),
 ('Kurs Inventora'),
 ('Kurs baz danych'),
 ('Kurs UI/UX');
-
---- Dodajemy 5 edycji kursu
 
 INSERT INTO Edycja (Semestr) VALUES 
 ('2022L'),
@@ -77,9 +71,6 @@ INSERT INTO Edycja (Semestr) VALUES
 ('2023Z'),
 ('2024L');
 
-
---- wypelniamy edycjakurs
-
 INSERT INTO EdycjaKursu (Nazwa, NazwaKursu, SemestrEdycji) VALUES 
 ('Kurs lutowania_2022L', 'Kurs lutowania', '2022L'),
 ('Kurs lutowania_2022Z', 'Kurs lutowania', '2022Z'),
@@ -87,7 +78,6 @@ INSERT INTO EdycjaKursu (Nazwa, NazwaKursu, SemestrEdycji) VALUES
 ('Kurs baz danych_2022L', 'Kurs baz danych', '2022L'),
 ('Kurs baz danych_2022Z', 'Kurs baz danych', '2022Z');
 
---- wypelniamy student edycjakursu
 
 INSERT INTO StudentEdycjaKursu (idStudent, idEdycjaKursu) VALUES 
 (1, 1),
@@ -106,7 +96,6 @@ INSERT INTO Kompetencja (Nazwa, idmanager) VALUES
 ('sieci komputerowe', 1),
 ('programowanie strukturalne', 1);
 
--- Dziedzina i certyfikatdziedzina
 INSERT INTO Dziedzina (nazwa, idtworca) VALUES 
 ('Elektronika', 2),
 ('Informatyka', 2),
@@ -135,7 +124,6 @@ INSERT INTO certyfikatdziedzina (certyfikatnazwa, dziedzinanazwa) VALUES
 '''
 
 CLEAR_DB = [
-    # Najpierw usuwamy tabele, które posiadają klucze obce odnoszące się do innych tabel
     "DROP TABLE IF EXISTS StudentEgzamin CASCADE;",
     "DROP TABLE IF EXISTS StudentEdycjaKursu CASCADE;",
     "DROP TABLE IF EXISTS MaterialyEdycjaKursu CASCADE;",
@@ -149,7 +137,6 @@ CLEAR_DB = [
     "DROP TABLE IF EXISTS KursDziedzina CASCADE;",
     "DROP TABLE IF EXISTS Materialy CASCADE;",
     "DROP TABLE IF EXISTS EdycjaKursu CASCADE;",
-    # Następnie usuwamy tabele, które definiują klucze obce dla innych tabel
     "DROP TABLE IF EXISTS Student CASCADE;",
     "DROP TABLE IF EXISTS Nauczyciel CASCADE;",
     "DROP TABLE IF EXISTS Autor CASCADE;",
