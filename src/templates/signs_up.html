@@ -1,62 +1,68 @@
 <!-- templates/signs_up.html -->
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Panel Menadżera</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    </head>
+<head>
+    <title>Student panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
 <body>
-    <div class="page-wrapper">
-        {% include './components/header.html' %}
-        <div class="mt-4">
-            <form action="{{ url_for('courses.sign_up_courses') }}" method="post">
-                <table class="basic-table">
-                    <thead>
-                        <tr>
-                            <th>Nazwa kursu</th>
-                            <th>Semestr</th>
-                            <th>Dziedzina</th>
-                            <th>Nie zapisany</th>
-                            <th>Zapisany</th>
-                            <th>Zapisany na Egzazmin</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for course in courses %}
-                            <tr>
-                                <td>{{ course[1] }}</td>
-                                <td>{{ course[2] }}</td>
-                                <td>
-                                    {% if course[3] %}
-                                        {{ course[3] }}
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <label for="{{ course[0] }}_{{ course[2] }}_no"></label>
-                                    <input type="radio" id="{{ course[0] }}_{{ course[2] }}_no" name="{{ course[0] }}_{{ course[2] }}_choice" value="0" {% if not course[0] in course_id[0][1].split(',')|map('int') %} checked {% endif %}>
-                                    Nie zapisany
-                                </td>
-                                <td>
-                                    <label for="{{ course[0] }}_{{ course[2] }}_yes"></label>
-                                    <input type="radio" id="{{ course[0] }}_{{ course[2] }}_yes" name="{{ course[0] }}_{{ course[2] }}_choice" value="1" {% if course[0] in course_id[0][1].split(',')|map('int') %} checked {% endif %}>
-                                    Zapisany
-                                </td>
-                                <td>
-                                    {% if course[4] %}
-                                        <label for="{{ course[0] }}_{{ course[4] }}_egzamin"></label>
-                                        <input type="checkbox" id="{{ course[0] }}_{{ course[4] }}_egzamin" name="{{ course[0] }}_{{ course[4] }}_egz" {% if course[4] in signed_exams[0][0].split(',') %} checked {% endif %}>
-                                        {{ course[4] }}
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+<div class="page-wrapper">
+    {% include './components/header.html' %}
+    <div class="mt-4">
+        <form action="{{ url_for('courses.sign_up_courses') }}" method="post">
+            <table class="basic-table">
+                <thead>
+                <tr>
+                    <th>Course name</th>
+                    <th>Semester</th>
+                    <th>Field</th>
+                    <th>Not signed up</th>
+                    <th>Signed up</th>
+                    <th>Signed up for exam</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for course in courses %}
+                <tr>
+                    <td>{{ course[1] }}</td>
+                    <td>{{ course[2] }}</td>
+                    <td>
+                        {% if course[3] %}
+                        {{ course[3] }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <label for="{{ course[0] }}_{{ course[2] }}_no"></label>
+                        <input type="radio" id="{{ course[0] }}_{{ course[2] }}_no"
+                               name="{{ course[0] }}_{{ course[2] }}_choice" value="0" {% if not course[0] in
+                               course_id[0][1].split(',')|map('int') %} checked {% endif %}>
+                        Not signed up
+                    </td>
+                    <td>
+                        <label for="{{ course[0] }}_{{ course[2] }}_yes"></label>
+                        <input type="radio" id="{{ course[0] }}_{{ course[2] }}_yes"
+                               name="{{ course[0] }}_{{ course[2] }}_choice" value="1" {% if course[0] in
+                               course_id[0][1].split(',')|map('int') %} checked {% endif %}>
+                        Signed up
+                    </td>
+                    <td>
+                        {% if course[4] %}
+                        <label for="{{ course[0] }}_{{ course[4] }}_egzamin"></label>
+                        <input type="checkbox" id="{{ course[0] }}_{{ course[4] }}_egzamin"
+                               name="{{ course[0] }}_{{ course[4] }}_egz" {% if course[4] in signed_exams[0][0].split(',')
+                        %} checked {% endif %}>
+                        {{ course[4] }}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
             <div class="table-header">
-                    <button class="button" type="submit">Zapisz się</button>
+                <button class="button" type="submit">Sign  up</button>
             </div>
-            </form>
-        </div>
+        </form>
     </div>
+</div>
 </body>
 </html>

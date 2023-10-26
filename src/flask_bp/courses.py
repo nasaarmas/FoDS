@@ -7,13 +7,13 @@ courses_bp = Blueprint('courses', __name__, template_folder='src.templates')
 @courses_bp.route('/courses')
 def browse_courses():
     if not session.get('logged_in'):
-        flash('Musisz się zalogować, aby uzyskać dostęp do tej strony!', 'danger')
+        flash('You have to login to access this site!', 'danger')
         return redirect(url_for('login.login'))
     is_student = db.query(
         "SELECT EXISTS(SELECT 1 FROM Student WHERE idUzytkownik = (SELECT id FROM Uzytkownik WHERE login = %s))",
         (session['username'],))[0][0]
     if not is_student:
-        flash('Nie masz uprawnień do dostępu do tej strony!', 'danger')
+        flash('You don\'t have enough permissions to view this site!', 'danger')
         return redirect(url_for('dash.dashboard'))
 
     courses = db.query("""
@@ -45,7 +45,7 @@ def browse_courses():
 @courses_bp.route('/courses/sign_up_courses', methods=['POST'])
 def sign_up_courses():
     if not session.get('logged_in'):
-        flash('Musisz się zalogować, aby uzyskać dostęp do tej strony!', 'danger')
+        flash('You have to login to access this site!', 'danger')
         return redirect(url_for('login.login'))
 
     student_id = db.query(
@@ -87,5 +87,5 @@ def sign_up_courses():
 
     db.conn.commit()
 
-    flash('Grupy zostały zaktualizowane!', 'success')
+    flash('Groups got updated successfully!', 'success')
     return redirect(url_for('courses.browse_courses'))

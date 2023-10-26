@@ -40,46 +40,47 @@
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        {% include './components/header.html' %}
-        <div class="mt-4">
-            <form action="{{ url_for('admin.update_groups') }}" method="post">
-                <div class="table-header">
-                    <button class="button" type="submit">Aktualizuj grupy</button>
-                </div>
-                <div class="table-wrapper">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Login</th>
-                                <th>Student</th>
-                                <th>Nauczyciel</th>
-                                <th>Autor</th>
-                                <th>Manager</th>
-                                <th>Admin</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for user in users %}
-                            <tr>
-                                <td>{{ user[0] }}</td>
-                                {% for group in ["Student", "Nauczyciel", "Autor", "Manager"] %}
-                                    <td>
-                                        <input type="checkbox" name="{{ user[0] }}_{{ group }}" {% if group in user[2].split(', ') %} checked {% endif %}>
-                                                    {{ group }}
-                                    </td>
-                                {% endfor %}
-                                <td>
-                                    <input type="checkbox" name="{{ user[0] }}_czyAdmin" {% if user[1]%} checked {% endif %}>
-                                                        Admin
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </form>
-        </div>
+<div class="page-wrapper">
+    {% include './components/header.html' %}
+    <div class="mt-4">
+        <form action="{{ url_for('admin.update_groups') }}" method="post">
+            <div class="table-header">
+                <button class="button" type="submit">Update groups</button>
+            </div>
+            <div class="table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                    <tr>
+                        <th>Login</th>
+                        <th>Student</th>
+                        <th>Teacher</th>
+                        <th>Author</th>
+                        <th>Manager</th>
+                        <th>Admin</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user[0] }}</td>
+                        {% for group in ["Student", "Nauczyciel", "Autor", "Manager"] %}
+                        <td>
+                            <input type="checkbox" name="{{ user[0] }}_{{ group }}" {% if group in user[2].split(', ')
+                            %} checked {% endif %}>
+                            {{ group }}
+                        </td>
+                        {% endfor %}
+                        <td>
+                            <input type="checkbox" name="{{ user[0] }}_czyAdmin" {% if user[1]%} checked {% endif %}>
+                            Admin
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
     </div>
+</div>
 </body>
 </html>

@@ -12,56 +12,56 @@
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        {% include './components/header.html' %}
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="flash-messages">
-                {% for category, message in messages %}
-                <div class="flash-message {{ category }}">{{ message }}</div>
-                {% endfor %}
-            </div>
-            {% endif %}
-            {% endwith %}
-            
-        <div>
-            <h2>Witaj <strong>{{ username }}</strong> w panelu użytkownika!</h2>
-        </div>
+<div class="page-wrapper">
+    {% include './components/header.html' %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
 
-        {% if is_student %}
-        <div class="tables-wrapper mt-2">  
+    <div>
+        <h2>Welcome <strong>{{ username }}</strong> in user panel!</h2>
+    </div>
+
+    {% if is_student %}
+    <div class="tables-wrapper mt-2">
+        <div>
             <div>
-                <div>
-                    <table class="basic-table">
-                        <tr>
-                            <th class="th-primary">Posiadane Kompetencje</th>
-                        </tr>
-                        <tr>
-                            <th>{{ student_competences[0][0] }}</th>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div>
-                <h3>Posiadane certyfikaty:</h3>
-                <div class="mt-2">
-                    <table class="basic-table">
-                        <tr>
-                            <th class="th-primary">Certyfikat</th>
-                        </tr>
-                        {% for cert in certs %}
-                        <tr>
-                            <th>{{ cert[0] }}</th>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
+                <table class="basic-table">
+                    <tr>
+                        <th class="th-primary">Acquired competences</th>
+                    </tr>
+                    <tr>
+                        <th>{{ student_competences[0][0] }}</th>
+                    </tr>
+                </table>
             </div>
         </div>
-        {% endif %}
-        <div class="mt-4 text-center">
-            <a href="{{ url_for('dash.update_competences') }}" class="button">Zaktualizuj Kompetencje</a>
+        <div>
+            <h3>Acquired certificates:</h3>
+            <div class="mt-2">
+                <table class="basic-table">
+                    <tr>
+                        <th class="th-primary">Certificate</th>
+                    </tr>
+                    {% for cert in certs %}
+                    <tr>
+                        <th>{{ cert[0] }}</th>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
+    {% endif %}
+    <div class="mt-4 text-center">
+        <a href="{{ url_for('dash.update_competences') }}" class="button">Update competences</a>
+    </div>
+</div>
 </body>
 </html>

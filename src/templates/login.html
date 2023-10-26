@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Logowanie</title>
+    <title>Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <div class="page-wrapper">
-        <div class="center">
-            <div>
-                <h2>Logowanie</h2>
-                <form
+<div class="page-wrapper">
+    <div class="center">
+        <div>
+            <h2>Log in</h2>
+            <form
                     action="{{ url_for('login.login')}}"
                     method="post"
                     class="form form-card mt-2"
-                >
-                    <div>
-                        <label for="username">Login:</label>
-                        <input type="text" name="username" required>
-                    </div>
-                    <div>
-                        <label for="password">Hasło:</label>
-                        <input type="password" name="password" required>
-                    </div> 
-                    <button type="submit" class="button">Zaloguj</button>
-                </form>
-                {% if request.method == "POST" %}
-                    {% if not user_exists %}
-                        {% with messages = get_flashed_messages(with_categories=true) %}
-                            {% if messages %}
-                                <div class="flash-messages">
-                                    {% for category, message in messages %}
-                                        <div class="flash-message {{ category }}">{{ message }}</div>
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                        {% endwith %}
-                    {% endif %}
-                {% endif %}
+            >
+                <div>
+                    <label for="username">Login:</label>
+                    <input type="text" name="username" required>
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" required>
+                </div>
+                <button type="submit" class="button">Log in</button>
+            </form>
+            {% if request.method == "POST" %}
+            {% if not user_exists %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
             </div>
+            {% endif %}
+            {% endwith %}
+            {% endif %}
+            {% endif %}
         </div>
     </div>
+</div>
 </body>
 </html>

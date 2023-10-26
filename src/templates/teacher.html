@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Nauczyciel</title>
+    <title>Teacher</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <style>
         .main {
             display: flex;
             gap: 2rem;
         }
+
         .forms-wrapper {
             display: flex;
             gap: 2rem;
@@ -16,89 +17,89 @@
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        {% include './components/header.html' %}
+<div class="page-wrapper">
+    {% include './components/header.html' %}
 
-        <h1>Witaj Nauczycielu!</h1>
-        <div class="main mt-2">
-            <div class="forms-wrapper">
-                <div>
-                    <h2>Określ materiał</h2>
-                    <form action="/create_material" method="post" class="form form-card mt-2">
-                        <div class="form-input">
-                            <label for="material_name">Nazwa:</label>
-                            <input type="text" name="material_name">
-                        </div>
-                        <div class="form-input">
-                            <label for="material_author">Autor:</label>
-                            <input type="text" name="material_author">
-                        </div>
-                        <button class="button" type="submit">Określ</button>
-                    </form>
-                </div>
-                <div>
-                    <h2>Przypisz materiał do kursu</h2>
-                    <form action="/assign_material" method="post" class="form form-card mt-2">
-                        <select name="material_author" multiple>
-                            <option disabled selected>Wybierz autora</option>
-                            {% for material in materials_authors %}
-                            <option value="{{ material }}">{{ material[1] }} - "{{ material[0] }}"</option>
-                            {% endfor %}
-                        </select>
-                        <select name="course_edition_name">
-                            <option disabled selected>Wybierz kurs</option>
-                            {% for course in courses %}
-                            <option value="{{ course }}">{{ course }}</option>
-                            {% endfor %}
-                        </select>
-                        <button class="button" type="submit">Przypisz</button> 
-                    </form>
-                </div>
+    <h1>Welcome teacher!</h1>
+    <div class="main mt-2">
+        <div class="forms-wrapper">
+            <div>
+                <h2>Define materials</h2>
+                <form action="/create_material" method="post" class="form form-card mt-2">
+                    <div class="form-input">
+                        <label for="material_name">Name:</label>
+                        <input type="text" name="material_name">
+                    </div>
+                    <div class="form-input">
+                        <label for="material_author">Author:</label>
+                        <input type="text" name="material_author">
+                    </div>
+                    <button class="button" type="submit">Define</button>
+                </form>
             </div>
-
-            <div class="table-container">
-                <div>
-                    <h2>Istniejące materiały</h2>
-                    <table class="basic-table mt-2">
-                        <tr>
-                            <th>Nazwa</th>
-                            <th>Autor</th>
-                        </tr>
-                        {% for material, author in materials_authors %}
-                        <tr>
-                            <td>{{ material }}</td>
-                            <td>{{ author }}</td>
-                        </tr>
+            <div>
+                <h2>Assign materials to course</h2>
+                <form action="/assign_material" method="post" class="form form-card mt-2">
+                    <select name="material_author" multiple>
+                        <option disabled selected>Select author</option>
+                        {% for material in materials_authors %}
+                        <option value="{{ material }}">{{ material[1] }} - "{{ material[0] }}"</option>
                         {% endfor %}
-                    </table>
-                </div>
-                <div class="mt-2">
-                    <h2>Materiały do edycji kursu</h2>
-                    <table class="basic-table mt-2">
-                        <thead>
-                            <tr>
-                                <th>Edycja Kursu</th>
-                                <th>Materialy</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for course, authors, names in courses_materials %}
-                            <tr>
-                                <td>{{ course }}</td>
-                                <td>
-                                    {% if authors and authors[0] is not none %}
-                                        {% for i in range(authors|length) %}
-                                            {{ authors[i] }} - "{{ names[i] }}"<br>
-                                        {% endfor %}
-                                    {% endif %}
-                                </td>
-                            </tr>
+                    </select>
+                    <select name="course_edition_name">
+                        <option disabled selected>Select course</option>
+                        {% for course in courses %}
+                        <option value="{{ course }}">{{ course }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="button" type="submit">Assign</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div>
+                <h2>Existing materials</h2>
+                <table class="basic-table mt-2">
+                    <tr>
+                        <th>Name</th>
+                        <th>Author</th>
+                    </tr>
+                    {% for material, author in materials_authors %}
+                    <tr>
+                        <td>{{ material }}</td>
+                        <td>{{ author }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="mt-2">
+                <h2>Assign materials to course edition</h2>
+                <table class="basic-table mt-2">
+                    <thead>
+                    <tr>
+                        <th>Course edition</th>
+                        <th>Materials</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for course, authors, names in courses_materials %}
+                    <tr>
+                        <td>{{ course }}</td>
+                        <td>
+                            {% if authors and authors[0] is not none %}
+                            {% for i in range(authors|length) %}
+                            {{ authors[i] }} - "{{ names[i] }}"<br>
                             {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

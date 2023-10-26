@@ -13,7 +13,7 @@ def manager():
         (username,))[0][0]
 
     if not is_manager:
-        flash('Nie masz uprawnień do dostępu do tej strony!', 'danger')
+        flash('You don\'t have permission to view this site!', 'danger')
         return redirect(url_for('dash.dashboard'))
 
     certificate_competences = db.query("""
@@ -38,13 +38,12 @@ def manager():
 @manager_bp.route('/create_certificate', methods=['POST'])
 def create_certificate():
     certificate_name = request.form.get('certificate_name')
-    # Próba dodania nowego certyfikatu
     db.cursor.execute(
         "INSERT INTO Certyfikat (Nazwa, idManager) VALUES (%s, (SELECT id FROM Uzytkownik WHERE login = %s))",
         (certificate_name, session['username']))
 
     db.conn.commit()
-    flash('Certyfikat stworzony pomyślnie!', 'success')
+    flash('Certificate created successfully!', 'success')
     return redirect(url_for('manager.manager'))
 
 
@@ -52,26 +51,24 @@ def create_certificate():
 def assign_competence_to_certificate():
     certificate_name = request.form.get('certificate_name')
     competence_name = request.form.get('competence_name')
-    # Próba przypisania kompetencji do certyfikatu
 
     db.cursor.execute(
         "INSERT INTO KompetencjaCertyfikat (idKompetencja, CertyfikatNazwa) VALUES ((SELECT id FROM Kompetencja WHERE Nazwa = %s), %s)",
         (competence_name, certificate_name))
 
     db.conn.commit()
-    flash('Kompetencja przypisana pomyślnie!', 'success')
+    flash('Competence assigned successfully!', 'success')
     return redirect(url_for('manager.manager'))
 
 
 @manager_bp.route('/create_competence', methods=['POST'])
 def create_competence():
     competence_name = request.form.get('competence_name')
-    # Próba dodania nowej kompetencji
     db.cursor.execute(
         "INSERT INTO Kompetencja (Nazwa, idmanager) VALUES (%s, (SELECT id FROM Uzytkownik WHERE login = %s))",
         (competence_name, session['username']))
     db.conn.commit()
-    flash('Kompetencja stworzona pomyślnie!', 'success')
+    flash('Competence created successfully!', 'success')
     return redirect(url_for('manager.manager'))
 
 
@@ -82,7 +79,7 @@ def create_field():
         "INSERT INTO Dziedzina (Nazwa, idTworca) VALUES (%s, (SELECT id FROM Uzytkownik WHERE login = %s))",
         (field_name, session['username']))
     db.conn.commit()
-    flash('Dziedzina stworzona pomyślnie!', 'success')
+    flash('Field created successfully!', 'success')
     return redirect(url_for('manager.manager'))
 
 
@@ -95,5 +92,5 @@ def assign_field_to_certificate():
                       (certificate_name, field_name))
 
     db.conn.commit()
-    flash('Dziedzina przypisana pomyślnie!', 'success')
+    flash('Field assigned successfully!', 'success')
     return redirect(url_for('manager.manager'))

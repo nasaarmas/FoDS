@@ -19,7 +19,9 @@ def teacher():
         INNER JOIN Materialy ON Materialy.id = MaterialyEdycjaKursu.idMaterialy
         GROUP BY EdycjaKursu.Nazwa;
     """)
-    return render_template('teacher.html', materials_authors=materials_authors, courses=courses, courses_materials=course_edition_materials)
+    return render_template('teacher.html', materials_authors=materials_authors, courses=courses,
+                           courses_materials=course_edition_materials)
+
 
 @teacher_bp.route('/create_material', methods=['POST'])
 def create_material():
@@ -32,8 +34,9 @@ def create_material():
         (material_author, material_name, username))
     db.conn.commit()
 
-    flash('Material created successfully!', 'success')
+    flash('Materials created successfully!', 'success')
     return redirect(url_for('teacher.teacher'))
+
 
 @teacher_bp.route('/assign_material', methods=['POST'])
 def assign_material_to_course_edition():
@@ -52,5 +55,5 @@ def assign_material_to_course_edition():
             (course_edition_name, material_name, material_author))
     db.conn.commit()
 
-    flash('Material assigned successfully!', 'success')
+    flash('Materials assigned successfully!', 'success')
     return redirect(url_for('teacher.teacher'))

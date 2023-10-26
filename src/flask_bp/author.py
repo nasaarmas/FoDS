@@ -11,7 +11,7 @@ def author():
         "SELECT EXISTS(SELECT 1 FROM Autor WHERE idUzytkownik = (SELECT id FROM Uzytkownik WHERE login = %s))",
         (username,))[0][0]
     if not is_author:
-        flash('Nie masz uprawnień do dostępu do tej strony!', 'danger')
+        flash('You don\'t have enough permissions to view this site!', 'danger')
         return redirect(url_for('dash.dashboard'))
 
     courses = [row[0] for row in db.query("SELECT Nazwa FROM Kurs")]
@@ -76,13 +76,13 @@ def create_course():
         "SELECT EXISTS(SELECT 1 FROM Autor WHERE idUzytkownik = (SELECT id FROM Uzytkownik WHERE login = %s))",
         (username,))[0][0]
     if not is_author:
-        flash('Nie masz uprawnień do dostępu do tej strony!', 'danger')
+        flash('You don\'t have enough permissions to view this site!', 'danger')
         return redirect(url_for('dash.dashboard'))
 
     course_name = request.form.get('course_name')
     db.cursor.execute("INSERT INTO Kurs (Nazwa) VALUES (%s)", (course_name,))
     db.conn.commit()
-    flash('Kurs stworzony pomyślnie!', 'success')
+    flash('Course created successfully!', 'success')
     return redirect(url_for('author.author'))
 
 
@@ -93,7 +93,7 @@ def create_course_edition():
         "SELECT EXISTS(SELECT 1 FROM Autor WHERE idUzytkownik = (SELECT id FROM Uzytkownik WHERE login = %s))",
         (username,))[0][0]
     if not is_author:
-        flash('Nie masz uprawnień do dostępu do tej strony!', 'danger')
+        flash('You don\'t have enough permissions to view this site!', 'danger')
         return redirect(url_for('dash.dashboard'))
 
     course_name = request.form.get('course_name')
@@ -103,7 +103,7 @@ def create_course_edition():
         "INSERT INTO EdycjaKursu (Nazwa, NazwaKursu, SemestrEdycji) VALUES (%s, %s, %s)",
         (f"{course_name}_{edition_name}", course_name, edition_name,))
     db.conn.commit()
-    flash('Edycja kursu stworzona pomyślnie!', 'success')
+    flash('Course edition created successfully!', 'success')
     return redirect(url_for('author.author'))
 
 
@@ -114,7 +114,7 @@ def assign_comptenece_to_course_edition():
         "SELECT EXISTS(SELECT 1 FROM Autor WHERE idUzytkownik = (SELECT id FROM Uzytkownik WHERE login = %s))",
         (username,))[0][0]
     if not is_author:
-        flash('Nie masz uprawnień do dostępu do tej strony!', 'danger')
+        flash('You don\'t have enough permissions to view this site!', 'danger')
         return redirect(url_for('dash.dashboard'))
 
     course_edition_name = request.form.get('course_edition_name')
@@ -124,7 +124,7 @@ def assign_comptenece_to_course_edition():
             "INSERT INTO KompetencjaEdycjaKursu (idKompetencja, idEdycjaKursu) VALUES ((SELECT id FROM Kompetencja WHERE Nazwa = %s), (SELECT id FROM EdycjaKursu WHERE Nazwa = %s))",
             (competence, course_edition_name,))
         db.conn.commit()
-    flash('Kompetencje przypisane pomyślnie!', 'success')
+    flash('Competences assigned successfully!', 'success')
     return redirect(url_for('author.author'))
 
 
@@ -135,7 +135,7 @@ def create_field():
         "INSERT INTO Dziedzina (Nazwa, idTworca) VALUES (%s, (SELECT id FROM Uzytkownik WHERE login = %s))",
         (field_name, session['username']))
     db.conn.commit()
-    flash('Kompetencja stworzona pomyślnie!', 'success')
+    flash('Competence created successfully!', 'success')
     return redirect(url_for('author.author'))
 
 
@@ -147,7 +147,7 @@ def assign_field_to_course():
                       (course_name, field_name))
 
     db.conn.commit()
-    flash('Dziedzina przypisana pomyślnie!', 'success')
+    flash('Field assigned successfully!', 'success')
     return redirect(url_for('author.author'))
 
 
@@ -158,14 +158,14 @@ def create_exam():
         "SELECT EXISTS(SELECT 1 FROM Autor WHERE idUzytkownik = (SELECT id FROM Uzytkownik WHERE login = %s))",
         (username,))[0][0]
     if not is_author:
-        flash('Nie masz uprawnień do dostępu do tej strony!', 'danger')
+        flash('You don\'t have enough permissions to view this site!', 'danger')
         return redirect(url_for('dash.dashboard'))
 
     exam_name = request.form.get('exam_name')
     db.cursor.execute(
         "INSERT INTO Egzamin (Nazwa, Autor) VALUES (%s, %s)", (exam_name, username))
     db.conn.commit()
-    flash('Egzamin stworzony pomyślnie!', 'success')
+    flash('Examin created successfully!', 'success')
     return redirect(url_for('author.author'))
 
 
@@ -176,7 +176,7 @@ def assign_exam_to_course_edition():
         "SELECT EXISTS(SELECT 1 FROM Autor WHERE idUzytkownik = (SELECT id FROM Uzytkownik WHERE login = %s))",
         (username,))[0][0]
     if not is_author:
-        flash('Nie masz uprawnień do dostępu do tej strony!', 'danger')
+        flash('You don\'t have enough permissions to view this site!', 'danger')
         return redirect(url_for('dash.dashboard'))
 
     course_edition_name = request.form.get('course_edition_name')
@@ -186,7 +186,7 @@ def assign_exam_to_course_edition():
         "INSERT INTO EgzaminEdycjaKursu (Nazwa, idEgzamin, idEdycjaKursu) VALUES (%s, (SELECT id FROM Egzamin WHERE Nazwa = %s), (SELECT id FROM EdycjaKursu WHERE Nazwa = %s))",
         (exam_course_edition_name, exam_name, course_edition_name,))
     db.conn.commit()
-    flash('Egzamin przypisany pomyślnie!', 'success')
+    flash('Examin assigned successfully!', 'success')
     return redirect(url_for('author.author'))
 
 
@@ -197,7 +197,7 @@ def assign_competences_to_exam_edition():
         "SELECT EXISTS(SELECT 1 FROM Autor WHERE idUzytkownik = (SELECT id FROM Uzytkownik WHERE login = %s))",
         (username,))[0][0]
     if not is_author:
-        flash('Nie masz uprawnień do dostępu do tej strony!', 'danger')
+        flash('You don\'t have enough permissions to view this site!', 'danger')
         return redirect(url_for('dash.dashboard'))
 
     exam_edition_name = request.form.get('exam_edition_name')
@@ -208,7 +208,7 @@ def assign_competences_to_exam_edition():
             "INSERT INTO KompetencjaEgzamin (idKompetencja, EgzaminEdycjaKursuNazwa) VALUES ((SELECT id FROM Kompetencja WHERE Nazwa = %s), %s)",
             (competence, exam_edition_name,))
         db.conn.commit()
-    flash('Kompetencje przypisane pomyślnie!', 'success')
+    flash('Competences assigned successfully!', 'success')
     return redirect(url_for('author.author'))
 
 

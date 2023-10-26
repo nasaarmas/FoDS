@@ -6,6 +6,7 @@
         gap: 4rem;
         height: 10vh;
     }
+
     .nav {
         display: flex;
         gap: 1rem;
@@ -17,13 +18,13 @@
 
     <div class="nav">
         <a href="{{ url_for('dash.dashboard') }}" class="button">Dashboard</a>
-        <a href="{{ url_for('admin.admin') }}" class="button">Sekcja admin</a>
-        <a href="{{ url_for('manager.manager') }}" class="button">Sekcja menadżera</a>
-        <a href="{{ url_for('author.author') }}" class="button">Sekcja autora</a>
-        <a href="{{ url_for('teacher.teacher') }}" class="button">Sekcja nauczyciela</a>
+        <a href="{{ url_for('admin.admin') }}" class="button">Admin section</a>
+        <a href="{{ url_for('manager.manager') }}" class="button">Manager section</a>
+        <a href="{{ url_for('author.author') }}" class="button">Author section</a>
+        <a href="{{ url_for('teacher.teacher') }}" class="button">Teacher section</a>
     </div>
     <div class="nav">
-        <a href="{{ url_for('courses.browse_courses') }}" class="button">Zapisy na kursy</a>
-        <a href="{{ url_for('login.logout') }}" class="button">Wyloguj</a>
+        <a href="{{ url_for('courses.browse_courses') }}" class="button">Signups for courses</a>
+        <a href="{{ url_for('login.logout') }}" class="button">Log out</a>
     </div>
 </header>

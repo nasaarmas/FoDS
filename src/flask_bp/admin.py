@@ -7,12 +7,12 @@ admin_bp = Blueprint('admin', __name__, template_folder='src.templates')
 @admin_bp.route('/admin')
 def admin():
     if not session.get('logged_in'):
-        flash('Musisz się zalogować, aby uzyskać dostęp do tej strony!', 'danger')
+        flash('You have to log in first, to acquire access to this site!', 'danger')
         return redirect(url_for('login.login'))
     is_admin = db.query(
         "SELECT czyAdmin FROM Uzytkownik WHERE login = %s", (session['username'],))[0][0]
     if not is_admin:
-        flash('Nie masz uprawnień do dostępu do tej strony!', 'danger')
+        flash('You don\'t have enough permissions to view this site!', 'danger')
         return redirect(url_for('dash.dashboard'))
 
     users = """
@@ -37,13 +37,13 @@ def admin():
 @admin_bp.route('/update_groups', methods=['POST'])
 def update_groups():
     if not session.get('logged_in'):
-        flash('Musisz się zalogować, aby uzyskać dostęp do tej strony!', 'danger')
+        flash('You have to log in first, to acquire access to this site!', 'danger')
         return redirect(url_for('login.login'))
 
     is_admin = db.query(
         "SELECT czyAdmin FROM Uzytkownik WHERE login = %s", (session['username'],))[0][0]
     if not is_admin:
-        flash('Nie masz uprawnień do dostępu do tej strony!', 'danger')
+        flash('You don\'t have enough permissions to view this site!', 'danger')
         return redirect(url_for('dash.dashboard'))
 
     for user in db.query("SELECT login FROM Uzytkownik"):
@@ -77,5 +77,5 @@ def update_groups():
                 db.cursor.execute("UPDATE Uzytkownik SET czyAdmin = False WHERE id = %s", (user_id,))
     db.conn.commit()
 
-    flash('Grupy zostały zaktualizowane!', 'success')
+    flash('Groups got updated!', 'success')
     return redirect(url_for('admin.admin'))

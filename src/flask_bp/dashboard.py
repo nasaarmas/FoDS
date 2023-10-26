@@ -7,7 +7,7 @@ dash_bp = Blueprint('dash', __name__, template_folder='src.templates')
 @dash_bp.route('/dashboard')
 def dashboard():
     if not session.get('logged_in'):
-        flash('Musisz się zalogować, aby uzyskać dostęp do tej strony!', 'danger')
+        flash('You have to login to access this site!', 'danger')
         return redirect(url_for('login.login'))
     student_competences = """
     SELECT STRING_AGG(k.nazwa, ', ') AS kompetencje
@@ -49,7 +49,7 @@ def update_competences():
     INNER JOIN egzaminedycjakursu eek on egzamin.id = eek.idegzamin
     INNER JOIN kompetencjaegzamin ke ON eek.nazwa = ke.EgzaminEdycjaKursuNazwa
     INNER JOIN kompetencja k ON ke.idkompetencja = k.id
-    WHERE se.czyzdal = true AND se.idstudent =  (SELECT id FROM uzytkownik WHERE login = 'jankowalski');"""
+    WHERE se.czyzdal = true AND se.idstudent =  (SELECT id FROM uzytkownik WHERE login = %s);"""
 
     for exam_comp in db.query(exam_comps, (session['username'],)):
         exists = "SELECT * FROM studentkompetencja WHERE idstudent = %s and idkompetencja = %s"

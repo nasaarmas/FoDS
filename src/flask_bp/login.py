@@ -16,10 +16,10 @@ def login():
         if user and user[0][1] == password:
             session['logged_in'] = True
             session['username'] = username
-            flash('Zalogowano pomyślnie!', 'success')
+            flash('Logged in successfully!', 'success')
             return redirect(url_for('dash.dashboard'))
         else:
-            flash('Nie ma takiego konta.', 'info')
+            flash('This account doesn\'t exist.', 'info')
 
     return render_template('login.html')
 
@@ -28,5 +28,5 @@ def login():
 def logout():
     session.pop('logged_in', None)
     session.pop('username', None)
-    flash('Wylogowano pomyślnie!', 'success')
+    flash('Logged out successfully!', 'success')
     return redirect(url_for('login.login'))
