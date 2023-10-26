@@ -1,0 +1,29 @@
+<style>
+    .header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 4rem;
+        height: 10vh;
+    }
+    .nav {
+        display: flex;
+        gap: 1rem;
+    }
+</style>
+<header class="header">
+    <!-- place for logo or empty -->
+    <div></div>
+
+    <div class="nav">
+        <a href="{{ url_for('dash.dashboard') }}" class="button">Dashboard</a>
+        <a href="{{ url_for('admin.admin') }}" class="button">Sekcja admin</a>
+        <a href="{{ url_for('manager.manager') }}" class="button">Sekcja menadżera</a>
+        <a href="{{ url_for('author.author') }}" class="button">Sekcja autora</a>
+        <a href="{{ url_for('teacher.teacher') }}" class="button">Sekcja nauczyciela</a>
+    </div>
+    <div class="nav">
+        <a href="{{ url_for('courses.browse_courses') }}" class="button">Zapisy na kursy</a>
+        <a href="{{ url_for('login.logout') }}" class="button">Wyloguj</a>
+    </div>
+</header>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel autora</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .left-section {
+            display: flex;
+            width: 40%;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .left-section > .form-card {
+            margin: 0;
+            width: 100%;
+        }
+
+        td:has(input[type="radio"]) {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="radio"] {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        {% include './components/header.html' %}
+        <div class="main">
+            <section class="left-section">
+                <form action="{{ url_for('author.create_course') }}" method="post" class="form form-card">
+                    <h2>Utwórz nowy kurs:</h2>
+                    <input type="text" name="course_name" placeholder="Nazwa kursu" required>
+                    <button class="button" type="submit">Utwórz</button>
+                </form>
+
+                <form action="{{ url_for('author.create_field') }}" method="post" class="form form-card">
+                    <h2>Utwórz nową dziedzinę:</h2>
+                    <input type="text" name="course_name" placeholder="Nazwa Dziedziny" required>
+                    <button class="button" type="submit">Utwórz</button>
+                </form>
+                <form action="{{ url_for('author.create_course_edition') }}" method="post" class="form form-card">
+                <h2>Połącz kurs z edycją:</h2>
+                <select name="course_name">
+                    <option disabled selected>Wybierz kurs</option>
+                    {% for course in courses %}
+                        <option value="{{ course }}">{{ course }}</option>
+                    {% endfor %}
+                </select>
+                <select name="edition_name">
+                    <option disabled selected>Wybierz edycję kursu</option>
+                    {% for edition in editions %}
+                        <option value="{{ edition }}">{{ edition }}</option>
+                    {% endfor %}
+                </select>
+                <button class="button" type="submit">Połącz</button>
+                </form>
+                <form action="{{ url_for('author.assign_comptenece_to_course_edition') }}" method="post" class="form form-card">
+                    <h2>Przypisz kompetencje do edycji kursu:</h2>
+                    <select name="course_edition_name">
+                        <option disabled selected>Wybierz edycję kursu</option>
+                        {% for course_ed in courses_edition %}
+                            <option value="{{ course_ed }}">{{ course_ed }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="competences" multiple>
+                        <option disabled selected>Wybierz kompetencję</option>
+                        {% for competence in competences %}
+                            <option value="{{ competence }}">{{ competence }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="button" type="submit">Przypisz kompetencje</button>
+                </form>
+                <form action="{{ url_for('author.assign_field_to_course') }}" method="post" class="form form-card">
+                    <h2>Przypisz dziedzine do kursu:</h2>
+                    <select name="course_name">
+                        <option disabled selected>Wybierz edycję kursu</option>
+                        {% for course in courses %}
+                            <option value="{{ course }}">{{ course }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="field_name" multiple>
+                        {% for field in fields %}
+                            <option value="{{ field }}">{{ field }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="button" type="submit">Przypisz Dziedzine</button>
+                </form>
+                <form action="{{ url_for('author.create_exam') }}" method="post" class="form form-card">
+                    <h2>Utwórz nowy egzamin:</h2>
+                    <input type="text" name="exam_name" placeholder="Nazwa egzaminu" required>
+                    <button class="button" type="submit">Utwórz</button>
+                </form>
+
+                <!-- Form for Assigning an Exam to a Course Edition -->
+                <form action="{{ url_for('author.assign_exam_to_course_edition') }}" method="post" class="form form-card">
+                    <h2>Przypisz egzamin do edycji kursu:</h2>
+                    <select name="course_edition_name">
+                        <option disabled selected>Wybierz edycję kursu</option>
+                        {% for course_ed in courses_edition %}
+                            <option value="{{ course_ed }}">{{ course_ed }}</option>
+                        {% endfor %}
+                    </select>
+                    <div style="padding-top: 10px;">
+                    <select name="exam_name">
+                        <option disabled selected>Wybierz egzamin</option>
+                        {% for exam in exams %}
+                            <option value="{{ exam }}">{{ exam }}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                    <button class="button" type="submit">Przypisz egzamin</button>
+                </form>
+
+                <!-- Form for Assigning Competences to Exam Edition -->
+                <form action="{{ url_for('author.assign_competences_to_exam_edition') }}" method="post" class="form form-card">
+                    <h2>Przypisz kompetencje do edycji egzaminu:</h2>
+                    <select name="exam_edition_name">
+                        <option disabled selected>Wybierz egzamin</option>
+                        {% for exam_ed in exam_editions %}
+                            <option value="{{ exam_ed }}">{{ exam_ed }}</option>
+                        {% endfor %}
+                    </select>
+                    <div style="padding-top: 10px;">
+                    <select name="competences" multiple>
+                        <option disabled selected>Wybierz kompetencję</option>
+                        {% for competence in competences %}
+                            <option value="{{ competence }}">{{ competence }}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                    <button class="button" type="submit">Przypisz kompetencje</button>
+                </form>
+            </section>
+            <section>
+                <div>
+                    <h2>Edycje kursu z przypisanymi kompetencjami:</h2>
+                    <table class="mt-2">
+                        <thead>
+                            <tr>
+                                <th>Edycja kursu</th>
+                                <th>Kompetencje</th>
+                                <th>Dziedzina</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for course_edition, competences, genres in courses_edition_competences %}
+                                <tr>
+                                    {% if course_edition is not none %}
+                                    <td>{{ course_edition }}</td>
+                                    <td>
+                                        {% if competences and competences[0] is not none %}
+                                            {{ ', '.join(competences) }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if genres and genres[0] is not none %}
+                                            {{ ', '.join(genres) }}
+                                        {% endif %}
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4">
+                    <h2>Edycje egzaminu z przypisanymi kompetencjami:</h2>
+                    <table class="mt-2">
+                        <thead>
+                            <tr>
+                                <th>Edycja egzaminu</th>
+                                <th>Kompetencje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for exam_edition, competences in exam_edition_competences %}
+                                <tr>
+                                    {% if exam_edition is not none %}
+                                    <td>{{ exam_edition }}</td>
+                                    <td>
+                                        {% if competences and competences[0] is not none %}
+                                            {{ ', '.join(competences) }}
+                                        {% endif %}
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <div class="mt-4">
+                        <h2>Studenci zapisani na kurs</h2>
+                        <form action="{{ url_for('author.student_passed_course') }}" method="post" class="form-card mt-2">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Imie</th>
+                                        <th>Nazwisko</th>
+                                        <th>Kurs</th>
+                                        <th>Zaliczone</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for student_name, student_surname, course_name, passed in students_courses %}
+                                    <tr>
+                                        {% if student_name is not none %}
+                                        <td>{{ student_name }}</td>
+                                        <td>{{ student_surname }}</td>
+                                        <td>{{ course_name }}</td>
+                                        <td>
+                                            <div>
+                                                <input type="radio" name="{{ student_name }}-{{ student_surname }}-{{ course_name }}" value="False" {% if not passed %}checked{% endif %}> NieZaliczone
+                                            </div>
+                                            <div>
+                                                <input type="radio" name="{{ student_name }}-{{ student_surname }}-{{ course_name }}" value="True" {% if passed %}checked{% endif %}> Zaliczone
+                                            </div>
+                                        </td>
+                                        {% endif %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <button type="submit" class="button mt-2">Zaktualizuj</button>
+                        </form>
+                    </div>
+                    <div class="mt-4">
+                        <h2>Studenci zapisani na egzamin</h2>
+                        <form action="{{ url_for('author.student_passed_exam') }}" method="post" class="form-card mt-2">
+                           <table>
+                                <thead>
+                                    <tr>
+                                        <th>Imie</th>
+                                        <th>Nazwisko</th>
+                                        <th>Edycja Kursu</th>
+                                        <th>Egzamin</th>
+                                        <th>Zaliczone</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for student_name, student_surname, course_name, exam_name, passed_exam in students_exams %}
+                                    <tr>
+                                        {% if student_name is not none %}
+                                        <td>{{ student_name }}</td>
+                                        <td>{{ student_surname }}</td>
+                                        <td>{{ course_name }}</td>
+                                        <td>{{ exam_name }}</td>
+                                        <td>
+                                            <div>
+                                                <input type="radio" name="exam-{{ student_name }}-{{ student_surname }}-{{ exam_name }}" style="display: flex;" value="False" {% if not passed_exam %}checked{% endif %}> NieZaliczone
+                                            </div>
+                                            <div>
+                                                <input type="radio" name="exam-{{ student_name }}-{{ student_surname }}-{{ exam_name }}" style="display: flex;" value="True" {% if passed_exam %}checked{% endif %}> Zaliczone
+                                            </div>
+                                        </td>
+                                        {% endif %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <button type="submit" class="button mt-2">Zaktualizuj</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

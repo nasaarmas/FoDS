@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 10px;
+            border: 1px solid #d4d4d4;
+        }
+
+        .admin-table th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+
+        .admin-table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .admin-table td input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .table-wrapper {
+            padding-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        {% include './components/header.html' %}
+        <div class="mt-4">
+            <form action="{{ url_for('admin.update_groups') }}" method="post">
+                <div class="table-header">
+                    <button class="button" type="submit">Aktualizuj grupy</button>
+                </div>
+                <div class="table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Login</th>
+                                <th>Student</th>
+                                <th>Nauczyciel</th>
+                                <th>Autor</th>
+                                <th>Manager</th>
+                                <th>Admin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ user[0] }}</td>
+                                {% for group in ["Student", "Nauczyciel", "Autor", "Manager"] %}
+                                    <td>
+                                        <input type="checkbox" name="{{ user[0] }}_{{ group }}" {% if group in user[2].split(', ') %} checked {% endif %}>
+                                                    {{ group }}
+                                    </td>
+                                {% endfor %}
+                                <td>
+                                    <input type="checkbox" name="{{ user[0] }}_czyAdmin" {% if user[1]%} checked {% endif %}>
+                                                        Admin
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
