@@ -13,7 +13,7 @@ Different users have different roles to create different things. :)
 
 - Few photos from GUI.
     - Admin:
-        ![img_3.png](assets/img_3.png)
+        ![img3.png](assets/img3.png)
   
     - Dashboard
         ![img_1.png](assets/img_1.png)  
