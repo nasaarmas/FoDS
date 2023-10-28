@@ -72,7 +72,7 @@
                 </div>
                 <div class="forms-row">
                     <div class="form-card">
-                        <h2>Assign competence to certificate</h2>
+                        <h2>Assign compt to certificate</h2>
                         <form action="{{ url_for('manager.assign_competence_to_certificate') }}" method="post"
                               class="form mt-2">
                             <select name="certificate_name">
@@ -114,32 +114,34 @@
         </div>
         <div class="table-container">
             <h2>Certificates list</h2>
-            <table class="basic-table mt-2">
-                <thead>
-                <tr>
-                    <th>Certificate</th>
-                    <th>Competence</th>
-                    <th>Field</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for certificate, competences, genre in certificate_competences %}
-                <tr>
-                    <td>{{ certificate }}</td>
-                    <td>
-                        {% if competences and competences[0] is not none %}
-                        {{ ', '.join(competences) }}
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if genre and genre[0] is not none %}
-                        {{ ', '.join(genre) }}
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <div class="form-card  mt-2">
+                <table class="basic-table">
+                    <thead>
+                    <tr>
+                        <th>Certificate</th>
+                        <th>Competence</th>
+                        <th>Field</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for certificate, competences, genre in certificate_competences %}
+                    <tr>
+                        <td>{{ certificate }}</td>
+                        <td>
+                            {% if competences and competences[0] is not none %}
+                            {{ ', '.join(competences) }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if genre and genre[0] is not none %}
+                            {{ ', '.join(genre) }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

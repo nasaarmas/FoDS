@@ -24,7 +24,7 @@
     <div class="main mt-2">
         <div class="forms-wrapper">
             <div>
-                <h2>Define materials</h2>
+                <h2>Define name and author of materials</h2>
                 <form action="/create_material" method="post" class="form form-card mt-2">
                     <div class="form-input">
                         <label for="material_name">Name:</label>
@@ -60,43 +60,47 @@
         <div class="table-container">
             <div>
                 <h2>Existing materials</h2>
-                <table class="basic-table mt-2">
-                    <tr>
-                        <th>Name</th>
-                        <th>Author</th>
-                    </tr>
-                    {% for material, author in materials_authors %}
-                    <tr>
-                        <td>{{ material }}</td>
-                        <td>{{ author }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
+                <div class="form-card mt-2">
+                    <table class="basic-table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Author</th>
+                        </tr>
+                        {% for material, author in materials_authors %}
+                        <tr>
+                            <td>{{ material }}</td>
+                            <td>{{ author }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
             <div class="mt-2">
                 <h2>Assign materials to course edition</h2>
-                <table class="basic-table mt-2">
-                    <thead>
-                    <tr>
-                        <th>Course edition</th>
-                        <th>Materials</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for course, authors, names in courses_materials %}
-                    <tr>
-                        <td>{{ course }}</td>
-                        <td>
-                            {% if authors and authors[0] is not none %}
-                            {% for i in range(authors|length) %}
-                            {{ authors[i] }} - "{{ names[i] }}"<br>
-                            {% endfor %}
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                <div class="form-card mt-2">
+                    <table class="basic-table">
+                        <thead>
+                        <tr>
+                            <th>Course edition</th>
+                            <th>Materials</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for course, authors, names in courses_materials %}
+                        <tr>
+                            <td>{{ course }}</td>
+                            <td>
+                                {% if authors and authors[0] is not none %}
+                                {% for i in range(authors|length) %}
+                                {{ authors[i] }} - "{{ names[i] }}"<br>
+                                {% endfor %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

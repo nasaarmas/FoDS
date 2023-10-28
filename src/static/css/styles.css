@@ -18,6 +18,9 @@ body {
     height: 100%;
 }
 
+th, td {
+    padding: .5rem 2rem;
+}
 
 button, input, [class*="button"] {
     border: none;
@@ -128,6 +131,13 @@ select {
     padding: .5rem 1rem;
     border-radius: 4px;
     border: 1px solid #ccc;
+}
+
+.form-field {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: center;
 }
 
 .main {

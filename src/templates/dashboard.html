@@ -30,16 +30,20 @@
 
     {% if is_student %}
     <div class="tables-wrapper mt-2">
+
         <div>
             <div>
-                <table class="basic-table">
-                    <tr>
-                        <th class="th-primary">Acquired competences</th>
-                    </tr>
-                    <tr>
-                        <th>{{ student_competences[0][0] }}</th>
-                    </tr>
-                </table>
+                <h3>Acquired competences:</h3>
+                <div class="mt-2">
+                    <table class="basic-table">
+                        <tr>
+                            <th class="th-primary">Competences</th>
+                        </tr>
+                        <tr>
+                            <th>{{ student_competences[0][0] }}</th>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
         <div>

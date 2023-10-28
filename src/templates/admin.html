@@ -42,12 +42,13 @@
 <body>
 <div class="page-wrapper">
     {% include './components/header.html' %}
+    <div>
+        <h1>Admin panel</h1>
+    </div>
     <div class="mt-4">
         <form action="{{ url_for('admin.update_groups') }}" method="post">
-            <div class="table-header">
-                <button class="button" type="submit">Update groups</button>
-            </div>
-            <div class="table-wrapper">
+
+            <div class="table-wrapper form-card mt-2">
                 <table class="admin-table">
                     <thead>
                     <tr>
@@ -65,8 +66,8 @@
                         <td>{{ user[0] }}</td>
                         {% for group in ["Student", "Nauczyciel", "Autor", "Manager"] %}
                         <td>
-                            <input type="checkbox" name="{{ user[0] }}_{{ group }}" {% if group in user[2].split(', ')
-                            %} checked {% endif %}>
+                            <input type="checkbox" name="{{ user[0] }}_{{ group }}"
+                                   {% if group in user[2].split(', ')%} checked {% endif %}>
                             {{ group }}
                         </td>
                         {% endfor %}
@@ -78,8 +79,13 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <div class="table-header">
+                    <button class="button" type="submit">Update groups</button>
+                </div>
             </div>
+
         </form>
+
     </div>
 </div>
 </body>

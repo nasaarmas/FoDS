@@ -35,7 +35,11 @@
 <div class="page-wrapper">
     {% include './components/header.html' %}
     <div class="main">
+
         <section class="left-section">
+            <div>
+                <h1>Author panel</h1>
+            </div>
             <form action="{{ url_for('author.create_course') }}" method="post" class="form form-card">
                 <h2>Create new course:</h2>
                 <input type="text" name="course_name" placeholder="Course name" required>
@@ -89,6 +93,7 @@
                     {% endfor %}
                 </select>
                 <select name="field_name" multiple>
+                    <option disabled selected>Select field</option>
                     {% for field in fields %}
                     <option value="{{ field }}">{{ field }}</option>
                     {% endfor %}
@@ -110,7 +115,7 @@
                     {% endfor %}
                 </select>
                 <div style="padding-top: 10px;">
-                    <select name="exam_name">
+                    <select style="width: 100%;" name="exam_name">
                         <option disabled selected>Select exam</option>
                         {% for exam in exams %}
                         <option value="{{ exam }}">{{ exam }}</option>
@@ -122,7 +127,7 @@
 
             <form action="{{ url_for('author.assign_competences_to_exam_edition') }}" method="post"
                   class="form form-card">
-                <h2>Assign competences to course edition:</h2>
+                <h2>Assign competences to exam course edition:</h2>
                 <select name="exam_edition_name">
                     <option disabled selected>Select exam</option>
                     {% for exam_ed in exam_editions %}
@@ -130,7 +135,7 @@
                     {% endfor %}
                 </select>
                 <div style="padding-top: 10px;">
-                    <select name="competences" multiple>
+                    <select style="width: 100%;" name="competences" multiple>
                         <option disabled selected>Select competences</option>
                         {% for competence in competences %}
                         <option value="{{ competence }}">{{ competence }}</option>
@@ -143,7 +148,7 @@
         <section>
             <div>
                 <h2>Course editions with assigned competences:</h2>
-                <table class="mt-2">
+                <table class="form-card mt-2">
                     <thead>
                     <tr>
                         <th>Course editionkursu</th>
@@ -174,7 +179,7 @@
             </div>
             <div class="mt-4">
                 <h2>Exam editions with assigned competences:</h2>
-                <table class="mt-2">
+                <table class="form-card mt-2">
                     <thead>
                     <tr>
                         <th>Exam edition</th>
@@ -218,12 +223,12 @@
                                 <td>{{ student_surname }}</td>
                                 <td>{{ course_name }}</td>
                                 <td>
-                                    <div>
+                                    <div style="display: flex; gap: .5rem;">
                                         <input type="radio"
                                                name="{{ student_name }}-{{ student_surname }}-{{ course_name }}"
                                                value="False" {% if not passed %}checked{% endif %}> NotPassed
                                     </div>
-                                    <div>
+                                    <div style="display: flex; gap: .5rem;">
                                         <input type="radio"
                                                name="{{ student_name }}-{{ student_surname }}-{{ course_name }}"
                                                value="True" {% if passed %}checked{% endif %}> Passed
@@ -260,13 +265,13 @@
                                 <td>{{ course_name }}</td>
                                 <td>{{ exam_name }}</td>
                                 <td>
-                                    <div>
+                                    <div style="display: flex; gap: .5rem;">
                                         <input type="radio"
                                                name="exam-{{ student_name }}-{{ student_surname }}-{{ exam_name }}"
                                                style="display: flex;" value="False" {% if not passed_exam %}checked{%
                                                endif %}> NotPassed
                                     </div>
-                                    <div>
+                                    <div style="display: flex; gap: .5rem;">
                                         <input type="radio"
                                                name="exam-{{ student_name }}-{{ student_surname }}-{{ exam_name }}"
                                                style="display: flex;" value="True" {% if passed_exam %}checked{% endif

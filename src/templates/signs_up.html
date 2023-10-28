@@ -8,7 +8,7 @@
 <body>
 <div class="page-wrapper">
     {% include './components/header.html' %}
-    <div class="mt-4">
+    <div class="form-card mt-4">
         <form action="{{ url_for('courses.sign_up_courses') }}" method="post">
             <table class="basic-table">
                 <thead>
@@ -58,6 +58,7 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <div style=" background-color: transparent; width: 20px; height: 20px;"></div>
             <div class="table-header">
                 <button class="button" type="submit">Sign  up</button>
             </div>
