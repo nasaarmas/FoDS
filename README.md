@@ -6,23 +6,23 @@ If student have enough specific competences he acquires certificates.
 Different users have different roles to create different things. :)
 
 - EER Diagram
-    ![img.png](img.png)
+    ![img.png](assets/img.png)
 
 - Logical Schema of database
-    ![img_2.png](img_2.png)
+    ![img_2.png](assets/img_2.png)
 
 - Few photos from GUI.
     - Admin:
-        ![img_3.png](img_3.png)
+        ![img_3.png](assets/img_3.png)
   
     - Dashboard
-        ![img_1.png](img_1.png)  
+        ![img_1.png](assets/img_1.png)  
 
     - Manager:
-        ![img_4.png](img_4.png)
+        ![img_4.png](assets/img_4.png)
   
     - Author:
-        ![img_5.png](img_5.png)
+        ![img_5.png](assets/img_5.png)
   
     - Teacher:
-        ![img_6.png](img_6.png)
+        ![img_6.png](assets/img_6.png)
